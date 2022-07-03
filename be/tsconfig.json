@@ -3,7 +3,7 @@
     "compilerOptions": {
       "skipLibCheck": true,
       "module": "commonjs",
-      "target": "es2015",
+      "target": "es5",
       "moduleResolution": "node",
       "esModuleInterop": true,
       "noImplicitAny": true,
@@ -12,9 +12,6 @@
       "sourceMap": false,
       "outDir": "dist",
       "baseUrl": ".",
-      "types": [
-        "node"
-      ],
       "paths": {
         "@": [""],
         "controllers" : ["src/controllers"],
@@ -22,7 +19,8 @@
         "models" : ["src/models"],
         "interfaces" : ["src/interfaces"],
         "abstracts" : ["src/abstracts"],
-        "services" : ["src/services"]
+        "services" : ["src/services"],
+        "config" : ["src/config"]
       },
       "noUnusedParameters": true,
       "noUnusedLocals": true,
