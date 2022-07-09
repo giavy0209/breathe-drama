@@ -43,6 +43,9 @@ export default abstract class AbstractRouter<I, C extends AbstractController<I, 
                 ags.push(...validate);
                 ags.push(this.isValidateError.bind(this));
             }
+            if(methodName === 'get') {
+                ags.push(this.checkPagination)
+            }
             if (ref) {
                 ags.push(ref.bind(this.controller))
             } else {
@@ -69,7 +72,6 @@ export default abstract class AbstractRouter<I, C extends AbstractController<I, 
             const payload = jwt.verify(token, global.Config.JWT_SECRET) as IUser
             this.user = payload
             this.controller.getInstance(this.user)
-
             req.user = payload
             return next()
         } catch (error) {
@@ -90,6 +92,10 @@ export default abstract class AbstractRouter<I, C extends AbstractController<I, 
         }
         if (Number.isNaN(skip)) {
             skip = 0
+        }
+        req.pagin = {
+            skip,
+            limit
         }
         next()
     }

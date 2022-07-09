@@ -7,16 +7,14 @@ export default class AbtractController<I, S extends AbstractService<I>> {
     ModelTenant: AbstractModel<I>
     service : S
     model : Model<I>
-    user : IUser
     constructor(ModelTenant: AbstractModel<I> ) {
         this.ModelTenant = ModelTenant
     }
 
     getInstance (user : IUser) {
-        this.user = user
         this.model = this.ModelTenant.getInstance(user.tenant)
         this.service.model = this.model
-        this.service.user = this.user
+        this.service.user = user
     }
 
     get(req : Request, _ : Response) {
