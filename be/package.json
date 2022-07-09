@@ -46,6 +46,8 @@
     "abstracts": "./dist/src/abstracts",
     "interfaces": "./dist/src/interfaces",
     "services": "./dist/src/services",
-    "config": "./dist/src/config"
+    "config": "./dist/src/config",
+    "utils": "./dist/src/utils",
+    "constant": "./dist/src/constant"
   }
 }
