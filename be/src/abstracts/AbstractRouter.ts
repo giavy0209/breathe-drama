@@ -1,18 +1,20 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, Router } from "express";
 import { IUser } from "interfaces";
-import { validationResult } from 'express-validator'
+import { checkSchema, Schema, validationResult } from 'express-validator'
 import jwt from 'jsonwebtoken'
 import { AbstractController } from "abstracts";
 import { AdvancedError } from "utils";
+import PromiseRouter from "express-promise-router";
 
 export default abstract class AbstractRouter<C extends AbstractController<any, any, any>> {
-  router: Router = Router()
+  router: Router = PromiseRouter()
   routes: {
     param?: string,
     method: string,
     authorized?: boolean
     ref?: (req: Request, res: Response) => void,
-    validate?: any[],
+    validate?: Schema ,
+    middlewares?: any[]
   }[] = [
       { method: 'GET' },
       { method: 'POST' },
@@ -21,7 +23,6 @@ export default abstract class AbstractRouter<C extends AbstractController<any, a
       { method: 'DELETE' },
     ]
   prefix: string
-  user: IUser
   controller: C
   constructor(prefix: string, Controller: new () => C) {
     this.prefix = prefix
@@ -33,48 +34,49 @@ export default abstract class AbstractRouter<C extends AbstractController<any, a
       authorized = true,
       method,
       param = '',
-      validate = [],
+      validate,
+      middlewares = []
     }) => {
       const methodName = method.toLowerCase() as 'get' | 'post' | 'put' | 'patch' | 'delete'
       const ags = []
-      let controllerFunction;
-      if (ref) {
-        controllerFunction = ref.bind(this.controller)
-      } else if (this.controller[param]) {
-        controllerFunction = this.controller[param].bind(this.controller)
-      } else {
-        controllerFunction = this.controller[methodName].bind(this.controller)
-      }
-      if (!controllerFunction) return
+
+      if (!ref) return
       if (authorized) {
-        ags.push(this.isAuthorized.bind(this))
+        ags.push(this.isAuthorized)
       }
-      if (validate.length > 0) {
-        ags.push(...validate);
+      if (validate) {
+        ags.push(...checkSchema(validate))
         ags.push(this.isValidateError);
+      }
+      if (middlewares.length > 0) {
+        ags.push(...middlewares);
       }
       if (methodName === 'get') {
         ags.push(this.checkPagination)
       }
-      ags.push(controllerFunction)
+      ags.push(ref.bind(this.controller))
 
       const routePath = `/${this.prefix}/${param}`
 
       this.router[methodName](routePath, ...ags)
     })
   }
-  async isAuthorized(req: Request, res: Response, next: NextFunction) {
-    if (req?.headers?.authorization?.split(' ')[0] !== 'Bearer') { return res.status(401).send({ msg: 'Not auth' }) }
-    try {
-      let token = req.headers.authorization.split(' ')[1]
-      const payload = jwt.verify(token, global.Config.JWT_SECRET) as IUser
-      this.user = payload
-      req.user = payload
-      return next()
-    } catch (error) {
-      return res.send('dmm')
+  isAuthorized(req: Request, _: Response, next: NextFunction) {
+    if (req?.headers?.authorization?.split(' ')[0] !== 'Bearer') {
+      throw new AdvancedError(
+        {
+          jwt: {
+            kind: 'missing',
+            message: 'JWT is missing'
+          },
+        },
+        { statusCode: 400 }
+      )
     }
-
+    let token = req.headers.authorization.split(' ')[1]
+    const payload = jwt.verify(token, global.Config.JWT_SECRET) as IUser
+    req.user = payload
+    return next()
   }
 
   checkPagination(req: Request, _: Response, next: NextFunction) {
@@ -121,6 +123,7 @@ export default abstract class AbstractRouter<C extends AbstractController<any, a
           [param]: objParam,
         }
       })
+
       throw new AdvancedError(objErrors)
     } else {
       next()

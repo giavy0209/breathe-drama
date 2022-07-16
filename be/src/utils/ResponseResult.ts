@@ -1,7 +1,7 @@
-import { SUCCESS, SUCCESS_CODE } from "constant"
+import { HTTPSTATUS, SUCCESS } from "constant"
 
 export default class ResponseResult {
-  public statusCode: number = SUCCESS_CODE
+  public statusCode: number = HTTPSTATUS.OK
   public message?: string
   public status: string = SUCCESS
   public data?: any[] | any
