@@ -1,0 +1,22 @@
+@import './utils/variable.scss';
+@import './utils/fonts.scss';
+@import './utils/mixin.scss';
+
+// Import Global Style Here
+@import './utils/helpers.scss';
+@import './utils/reset.scss';
+
+
+//import layouts style
+@import './layouts/main.scss';
+
+//import component style
+@import './components/header.scss';
+@import './components/footer.scss';
+@import './components/sidebar.scss';
+@import './components/form.scss';
+@import './components/input.scss';
+
+
+//import page style
+@import './pages/home.scss';

@@ -1,0 +1,46 @@
+.row-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .label {
+    width: 24px;
+    height: 24px;
+  }
+  .label ~ .input-placeholder {
+    margin-left: 35px;
+  }
+  .input-placeholder {
+    position: relative;
+    width: 100%;
+    .placeholder {
+      position: absolute;
+      pointer-events: none;
+      bottom: 5px;
+      left: 5px;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+    input {
+      width: 100%;
+      font-size: 18px;
+      color: $text-color-normal;
+      background-color: $background-dark;
+      padding: 10px;
+    }
+    .eye {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translate(0, -50%);
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+    &.active {
+      .placeholder {
+        bottom: calc(100%);
+        font-size: 14px;
+      }
+    }
+  }
+}
