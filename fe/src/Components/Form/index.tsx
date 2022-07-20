@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router'
 import { useCallback, FC, FormEvent } from 'react'
-import { toast } from 'react-toastify'
 import { Input } from 'Components'
+import { Link } from 'react-router-dom'
 interface IInput {
   label?: any,
   name: string,
@@ -13,12 +12,15 @@ interface IForm {
   listInput: IInput[],
   buttonText: string,
   onSubmit(formvalue?: { [k: string]: any }): any
-
+  link : string,
+  linkText : string
 }
 
 const Form: FC<IForm> = function ({
   listInput,
   buttonText,
+  link,
+  linkText,
   onSubmit,
 }) {
   const handleSubmitForm = useCallback((e: FormEvent<HTMLFormElement>) => {
@@ -42,6 +44,7 @@ const Form: FC<IForm> = function ({
             }
             <button type='submit'>{buttonText}</button>
           </form>
+          <Link className='link' to={link}>{linkText}</Link>
         </div>
       </div>
     </>

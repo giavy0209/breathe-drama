@@ -11,11 +11,13 @@ const Signup: FC = () => {
     const res = await callAPI.post('/user/signup', data)
     toast(res.message)
     navigate('/signin')
-  }, [])
+  }, [navigate])
   return (
     <>
       <Form
         buttonText="Signup"
+        link="/signin"
+        linkText="Signin"
         listInput={[
           {
             name: "username",
