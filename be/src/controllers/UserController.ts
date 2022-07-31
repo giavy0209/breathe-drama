@@ -1,4 +1,5 @@
 import { AbstractController } from "abstracts";
+import { DATA_FOUND } from "constant";
 import { Request, Response } from "express";
 import { IUser } from "interfaces";
 import { Users } from "models";
@@ -25,6 +26,14 @@ export default class UserController extends AbstractController<IUser, UserServic
     res.send(new ResponseResult({
       data,
       message: 'Sign up successfully'
+    }))
+  }
+  async getMy(req: Request, res: Response) {
+    const service = this.createService(req.user)
+    const data = await service.model.findById(req.user._id)
+    res.send(new ResponseResult({
+      data,
+      message: DATA_FOUND
     }))
   }
 }

@@ -29,9 +29,7 @@ export default class AbtractController<I, S extends AbstractService<I>, M extend
       message: DATA_FOUND
     }))
   }
-  post(_: Request, __: Response) {
-    
-  }
+  
   put(_: Request, __: Response) {
 
   }

@@ -42,6 +42,11 @@ export default class UserRouter extends AbstractRouter<UserController> {
       {
         method: 'GET',
         ref: this.controller.get
+      },
+      {
+        param: 'my',
+        method: 'GET',
+        ref: this.controller.getMy
       }
     ]
   }

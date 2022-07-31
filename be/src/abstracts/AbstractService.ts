@@ -9,7 +9,7 @@ export default abstract class AbstractService<I> {
     this.user = user
   }
   async find(query: FilterQuery<I>, skip: number, limit: number, populate?: PopulateOption['populate']) {
-    const options: QueryOptions = {}
+    const options: QueryOptions = {sort : {_id : -1}}
     if (skip) {
       options.skip = skip
     }
