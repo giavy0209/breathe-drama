@@ -1,0 +1,61 @@
+.modal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s;
+  &.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .mask {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: .3);
+    cursor: pointer;
+  }
+  .body {
+    width: 90%;
+    max-width: 650px;
+    padding: 10px;
+    background-color: $background-light;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    border-radius: 5px;
+    height: 50%;
+    z-index: 9;
+    * {
+      color: $secondary-color;
+    }
+    .title {
+      font-size: 24px;
+      border-bottom: $border;
+      padding-bottom: 10px;
+    }
+    .content {
+      padding: 10px 0;
+      overflow-y: scroll;
+      height: 80%;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .footer {
+      padding-top: 10px;
+      display: flex;
+      justify-content: flex-end;
+      border-top: $border;
+      .button + .button {
+        margin-left: 10px;
+      }
+    }
+  }
+}

@@ -1,6 +1,16 @@
 aside {
   border-right: $border-light;
   padding: 0 10px;
+  .button {
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    border: $border-light;
+    background-color: $secondary-color;
+    font-size: 20px;
+  }
   .item {
     padding: 10px 0;
     

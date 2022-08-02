@@ -15,17 +15,19 @@
     .placeholder {
       position: absolute;
       pointer-events: none;
-      bottom: 5px;
-      left: 5px;
+      top: 50%;
+      transform: translate(0 , -50%);
+      left: 10px;
       font-size: 18px;
       transition: 0.3s;
     }
     input {
       width: 100%;
       font-size: 18px;
-      color: $text-color-normal;
-      background-color: $background-dark;
+      color: $text-color-dark;
       padding: 10px;
+      border-radius: 5px;
+      border:  $border;      
     }
     .eye {
       position: absolute;
@@ -38,8 +40,9 @@
     }
     &.active {
       .placeholder {
-        bottom: calc(100%);
-        font-size: 14px;
+        top: 0;
+        transform: translate(0);
+        font-size: 10px;
       }
     }
   }

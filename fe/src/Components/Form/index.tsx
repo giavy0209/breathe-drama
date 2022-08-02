@@ -1,53 +1,25 @@
-import { useCallback, FC, FormEvent } from 'react'
-import { Input } from 'Components'
-import { Link } from 'react-router-dom'
-interface IInput {
-  label?: any,
-  name: string,
-  placeholder?: string,
-  type: string
-}
+import { EventHandler, FC, FormEvent, LegacyRef, ReactNode, useCallback, useRef } from "react";
 
 interface IForm {
-  listInput: IInput[],
-  buttonText: string,
-  onSubmit(formvalue?: { [k: string]: any }): any
-  link : string,
-  linkText : string
+  onSubmit(data : {[k : string] : any}): any
+  children : ReactNode
 }
 
-const Form: FC<IForm> = function ({
-  listInput,
-  buttonText,
-  link,
-  linkText,
-  onSubmit,
-}) {
-  const handleSubmitForm = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.target as HTMLFormElement)
-
+const Form: FC<IForm> = ({onSubmit,children}) => {
+  const form = useRef<HTMLFormElement>(null)
+  const handleSubmitForm = useCallback((event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(form.current as HTMLFormElement)
     const submitData: { [k: string]: any } = {}
     for (let field of formData) {
       submitData[field[0]] = field[1]
     }
     onSubmit(submitData)
-
-  }, [onSubmit])
+  }, [])
   return (
-    <>
-      <div className="container-fixed">
-        <div className="container form">
-          <form onSubmit={handleSubmitForm}>
-            {
-              listInput.map(o => <Input key={o.name} label={o.label} name={o.name} placeholder={o.placeholder} type={o.type} />)
-            }
-            <button type='submit'>{buttonText}</button>
-          </form>
-          <Link className='link' to={link}>{linkText}</Link>
-        </div>
-      </div>
-    </>
+    <form onSubmit={handleSubmitForm} ref={form} >
+      {children}
+    </form>
   )
 }
 

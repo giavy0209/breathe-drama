@@ -1,5 +1,5 @@
 import callAPI from "callAPI";
-import { Form } from "Components";
+import { FormFixed } from "Components";
 import { useCallback } from "react";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const Signup: FC = () => {
   }, [navigate])
   return (
     <>
-      <Form
+      <FormFixed
         buttonText="Signup"
         link="/signin"
         linkText="Signin"

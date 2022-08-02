@@ -1,4 +1,4 @@
-import { Footer, Header, Sidebar } from "Components";
+import { Sidebar } from "Components";
 import { useEffect } from "react";
 import { FC, PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,14 +21,12 @@ const Main: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <div id="main-layout">
-        <Header />
         <main>
           <Sidebar />
           <section>
             {children}
           </section>
         </main>
-        <Footer />
       </div>
     </>
   )

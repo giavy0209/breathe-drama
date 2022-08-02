@@ -9,10 +9,7 @@ import { selectChats, selectUser } from 'store/selectors'
 const Home: FC = () => {
   const dispatch = useAppDispatch()
   const currentUser = useAppSelector(selectUser)
-  console.log(currentUser);
-  
   const chats = useAppSelector(selectChats)
-
   const handleSubmitForm = useCallback(async (e: any) => {
     e.preventDefault()
     const form = new FormData(e.target)
