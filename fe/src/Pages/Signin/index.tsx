@@ -1,5 +1,5 @@
+import { Form } from "antd";
 import callAPI from "callAPI";
-import { FormFixed } from "Components";
 import { useCallback } from "react";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,24 +16,9 @@ const Signin: FC = () => {
   }, [navigate])
   return (
     <>
-      <FormFixed
-        buttonText="Signin"
-        link="/signup"
-        linkText="Signup"
-        listInput={[
-          {
-            name: "username",
-            type: "text",
-            placeholder: "User name"
-          },
-          {
-            name: "password",
-            type: "password",
-            placeholder: "Password"
-          }
-        ]}
-        onSubmit={handleSubmit}
-      />
+      <Form>
+        
+      </Form>
     </>
   )
 }
