@@ -1,6 +1,6 @@
 import { AbstractService } from "abstracts"
 import { IChat } from "interfaces"
-import io from "../../../socket"
+import io from "socket"
 import { IPostInput } from "./interface"
 export default class ChatService extends AbstractService<IChat>  {
   async post ({content} : IPostInput) {
